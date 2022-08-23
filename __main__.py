@@ -8,6 +8,7 @@ logging.basicConfig(level=logging.INFO)
 
 async def main():
     asyncio.create_task(metrics.update_loop())
+    asyncio.create_task(bot.update_base_message_loop())
     await bot.start()
     await jobs.start()
     try:

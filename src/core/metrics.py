@@ -1,27 +1,33 @@
+from docker import DockerClient
 import asyncio
 import shutil
 
 
 class Metrics:
-    update_loop: bool = False
+    docker_client: DockerClient
+    update_loop_active: bool = False
 
     storage_total: int
     storage_left: int
     storage_used: int
+    running_container_count: int
 
-    def __init__(self):
+    def __init__(self, docker_client: DockerClient):
+        self.docker_client = docker_client
         self.collect_metrics()
 
     def collect_metrics(self):
         disk_usage = shutil.disk_usage("/")
         self.storage_total, self.storage_used, self.storage_left = [
             x // (2**30) for x in disk_usage]
+        self.running_container_count = len(
+            self.docker_client.containers.list())
 
     async def update_loop(self):
-        if self.update_loop:
+        if self.update_loop_active:
             return
 
-        self.update_loop = True
-        while self.update_loop:
+        self.update_loop_active = True
+        while self.update_loop_active:
             self.collect_metrics()
-            asyncio.sleep(60)
+            await asyncio.sleep(60)

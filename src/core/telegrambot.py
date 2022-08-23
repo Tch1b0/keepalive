@@ -45,8 +45,13 @@ class TelegramBot(Bot):
         if content != self.base_message.text:
             await self.base_message.edit_text(content)
 
+    async def update_base_message_loop(self):
+        while True:
+            await asyncio.sleep(30)
+            await self.update_base_message()
+
     def get_info_board(self) -> str:
-        msg = f"{Emoji.ROCKET} keepalive is currently keeping alive\n" + \
+        msg = f"{Emoji.ROCKET.value} keepalive is currently keeping alive\n" + \
             f"Last ping: {datetime.now().strftime('%d.%m.%Y %H:%M')}\n"
         msg += "\n".join(f() for f in self.informants)
         return msg

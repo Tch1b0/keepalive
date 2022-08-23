@@ -1,10 +1,22 @@
-import os
+import logging
+from enum import Enum, auto
+from subprocess import call
+
+log = logging.getLogger()
 
 
-class Emoji:
+class Emoji(Enum):
     ROCKET = "\U0001F680"
     CHECK_MARK = "\U00002705"
     CROSS_MARK = "\U0000274C"
+
+
+class ImportanceLevel(Enum):
+    VERY_LOW = auto()
+    LOW = auto()
+    MEDIUM = auto()
+    IMPORTANT = auto()
+    URGENT = auto()
 
 
 def time_in_seconds(seconds: float = 0, minutes=0, hours=0, days=0) -> float:
@@ -12,9 +24,4 @@ def time_in_seconds(seconds: float = 0, minutes=0, hours=0, days=0) -> float:
 
 
 def exec_sh(command: str) -> int:
-    return os.system(command)
-
-
-def free_storage():
-    for item in ["image", "container"]:
-        exec_sh(f"docker {item} prune -f")
+    return call(command, shell=True)
