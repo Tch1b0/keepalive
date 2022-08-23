@@ -1,16 +1,19 @@
+import os
 import asyncio
 from datetime import datetime, timedelta
 from telegram import Bot, User, Message, Chat
 from telegram.ext import Updater
 from telegram.request import BaseRequest
+from dotenv import load_dotenv
 
 try:
     from src.utility import Emoji
 except:
     from utility import Emoji
 
-ADMIN_CHAT_ID = "188838345"
-BOT_TOKEN = "5337387114:AAFKz7jBGQi76RqyefHYfxurqYqOWOVuda8"
+load_dotenv()
+ADMIN_ID = os.getenv("ADMIN_ID")
+BOT_TOKEN = os.getenv("BOT_TOKEN")
 
 
 class TelegramBot(Bot):
