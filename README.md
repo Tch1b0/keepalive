@@ -1,7 +1,7 @@
 # keepalive
 
 <div align="center">
-    <a href="https://johannespour.de"><img src="./logo.png" width="150px" /></a>
+    <a href="https://johannespour.de"><img src="./logo.png" width="300px" /></a>
     <br>
     <h3>helping to keep my personal server alive</h3>
     <img src="https://img.shields.io/github/license/Tch1b0/keepalive" width="88px" />
