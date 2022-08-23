@@ -10,11 +10,11 @@ log = logging.getLogger()
 class Job:
     # job should run every `timeout` seconds
     callback: JobCallable
-    timeout: int
+    timeout: float
     active: bool
     run_initially: bool
 
-    def __init__(self, callback: JobCallable, timeout: int, run_initially: bool) -> None:
+    def __init__(self, callback: JobCallable, timeout: float, run_initially: bool) -> None:
         self.callback = callback
         self.timeout = timeout
         self.active = False
@@ -48,7 +48,7 @@ class Job:
 class Jobs:
     jobs: list[Job] = []
 
-    def register(self, timeout: int, run_initially: bool = True) -> Callable[[JobCallable], None]:
+    def register(self, timeout: float, run_initially: bool = True) -> Callable[[JobCallable], None]:
         def inner(callable: JobCallable) -> None:
             job = Job(callable, timeout, run_initially)
             self.jobs.append(job)
