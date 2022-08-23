@@ -1,12 +1,9 @@
-# keepalive
-
 <div align="center">
     <img src="./logo.png" width="250px" />
-    <h1>keepalive</h1>
-    <br>
+    <h1 style="underline">keepalive</h1>
     <h3>helping to keep my server alive</h3>
-    <img src="https://img.shields.io/github/license/Tch1b0/keepalive" width="88px" />
-    <img src="https://img.shields.io/github/issues/Tch1b0/keepalive" width="88px" />
+    <img src="https://img.shields.io/github/license/Tch1b0/keepalive" />
+    <img src="https://img.shields.io/github/issues/Tch1b0/keepalive" />
 </div>
 
 ## why?
@@ -14,6 +11,16 @@
 There are frequent tasks that I need to do on my server and different processes I need to keep track of.
 
 keepalive does certain tasks for me, asks me for permission for more complex tasks and notifies me if something is wrong with server or my docker containers.
+
+## how does it operate?
+
+keepalive has some jobs that will be run in a specified interval (sounds like cronjob, but it's different). If it needs my permission for something or I need to decide something, keepalive reaches out to me on telegram to ask me for my permission or my choice. And if something happens, e.g. one of my containers stops working or my storage goes really low, it tells me via telegram and depending on the problem offers solutions.
+
+## when can I get my own keepalive?
+
+The software is currently made to fit my needs, so it isn't really generic enough to do the job for a majority users. 
+
+But we can make it generic. Feel free to contribute to help achieving this goal.
 
 ## requirements
 
