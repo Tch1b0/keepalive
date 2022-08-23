@@ -1,9 +1,10 @@
 # keepalive
 
 <div align="center">
-    <a href="https://johannespour.de"><img src="./logo.png" width="250px" /></a>
+    <img src="./logo.png" width="250px" />
+    <h1>keepalive</h1>
     <br>
-    <h3>helping to keep my personal server alive</h3>
+    <h3>helping to keep my server alive</h3>
     <img src="https://img.shields.io/github/license/Tch1b0/keepalive" width="88px" />
     <img src="https://img.shields.io/github/issues/Tch1b0/keepalive" width="88px" />
 </div>
