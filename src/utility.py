@@ -1,6 +1,10 @@
 import os
 
 
+class Emoji:
+    ROCKET = "\U0001F680"
+
+
 def decide(question: str, answers: list[str] = []) -> str:
     print(question)
     # if this is not a selection question, the user has to give his own input
@@ -10,6 +14,11 @@ def decide(question: str, answers: list[str] = []) -> str:
     for i, answer in enumerate(answers):
         print(f"{i + 1}. {answer}")
     return answers[int(input()) - 1]
+
+
+def decide_bool(question: str) -> bool:
+    print(question)
+    return input().lower().startswith("y")
 
 
 def inform(content: str):

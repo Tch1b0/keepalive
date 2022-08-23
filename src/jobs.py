@@ -1,7 +1,10 @@
 import asyncio
+import logging
 from typing import Callable, Coroutine
 
 JobCallable = Coroutine
+
+log = logging.getLogger()
 
 
 class Job:
@@ -17,7 +20,7 @@ class Job:
         self.active = False
         self.run_initially = run_initially
 
-    async def start(self) -> Coroutine:
+    async def start(self) -> None:
         """
         start the job loop
         """
@@ -26,12 +29,13 @@ class Job:
             await self.callback()
         asyncio.create_task(self.job_loop())
 
-    async def job_loop(self) -> Coroutine:
+    async def job_loop(self) -> None:
         while self.active:
             await asyncio.sleep(self.timeout)
             # double check of `active` is required, because it might have changed
             # while the sleep took place
             if self.active:
+                log.info(f"Executing job: {self.callback.__name__}")
                 await self.callback()
 
     def stop(self) -> None:
