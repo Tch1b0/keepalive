@@ -27,7 +27,7 @@ The software is currently made to fit my needs, so it isn't generic enough to do
 
 But we can make it generic. Feel free to contribute to help achieving this goal.
 
-But **if** your needs fit mine and you want to use keepalive in the state it currently is, read [the setting up guide](#setting-up).
+However, **if** your needs fit mine and you want to use keepalive in the state it currently is, read [the setting up guide](#setting-up).
 
 ## setting up
 
