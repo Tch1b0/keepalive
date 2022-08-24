@@ -1,3 +1,4 @@
+import io
 import logging
 from enum import Enum, auto
 from subprocess import call
@@ -23,6 +24,13 @@ def time_in_seconds(seconds: float = 0, minutes=0, hours=0, days=0) -> float:
     return seconds + minutes * 60 + hours * 60 * 60 + days * 60 * 60 * 24
 
 
-def exec_sh(command: str) -> int:
+def exec_sh(command: str) -> tuple[int, str]:
+    """
+    execute shell command
+
+    returns the return code and the error output
+    """
     log.info(f"Executing shell command \"{command}\"")
-    return call(command, shell=True)
+    buffer = io.StringIO()
+    code = call(command, shell=True, stderr=buffer)
+    return code, buffer.read()
