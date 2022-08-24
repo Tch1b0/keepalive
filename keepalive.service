@@ -6,7 +6,7 @@ Description=keepalive keeping the server alive
 [Service]
 
 # Command to execute when the service is started
-ExecStart=/usr/bin/python3.10 /usr/local/lib/keepalive
+ExecStart=/usr/bin/python3.10 /usr/lib/keepalive
 
 # Disable Python's buffering of STDOUT and STDERR, so that output from the
 # service shows up immediately in systemd's logs
