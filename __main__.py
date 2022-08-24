@@ -3,7 +3,7 @@ import logging
 try:
     import systemd
 except ImportError:
-    import non_systemd as systemd
+    import src.non_systemd as systemd
 
 from src.register_jobs import jobs, bot, metrics
 
