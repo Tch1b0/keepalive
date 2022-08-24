@@ -27,10 +27,7 @@ def time_in_seconds(seconds: float = 0, minutes=0, hours=0, days=0) -> float:
 def exec_sh(command: str) -> tuple[int, str]:
     """
     execute shell command
-
-    returns the return code and the error output
     """
     log.info(f"Executing shell command \"{command}\"")
-    buffer = io.StringIO()
-    code = call(command, shell=True, stderr=buffer)
-    return code, buffer.read()
+    code = call(command, shell=True)
+    return code
