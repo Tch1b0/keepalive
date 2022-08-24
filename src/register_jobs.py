@@ -43,9 +43,10 @@ async def verify_cloud():
         if container.name in ["nextcloud", "nextcloud-db"]:
             nx_containers.append(container)
 
-    for container in nx_containers:
-        if container.status != "running":
-            if await bot.decide(f"Nexcloud container \"{container.name}\" is not running. Start it again?", ["yes", "no"]) == 0:
+    if any(c.status != "running" for c in nx_containers):
+        question = f"Nexcloud container \"{container.name}\" is not running. Restart both containers?"
+        if await bot.decide(question, ["yes", "no"]) == 0:
+            for container in nx_containers:
                 container.restart()
 
 
