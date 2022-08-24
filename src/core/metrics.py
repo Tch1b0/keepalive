@@ -1,7 +1,9 @@
+import logging
 from docker import DockerClient
 import asyncio
 import shutil
 
+log = logging.getLogger()
 
 class Metrics:
     docker_client: DockerClient
@@ -17,6 +19,7 @@ class Metrics:
         self.collect_metrics()
 
     def collect_metrics(self):
+        log.info("Collecting metrics")
         disk_usage = shutil.disk_usage("/")
         self.storage_total, self.storage_used, self.storage_left = [
             x // (2**30) for x in disk_usage]

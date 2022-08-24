@@ -24,4 +24,5 @@ def time_in_seconds(seconds: float = 0, minutes=0, hours=0, days=0) -> float:
 
 
 def exec_sh(command: str) -> int:
+    log.info(f"Executing shell command \"{command}\"")
     return call(command, shell=True)
