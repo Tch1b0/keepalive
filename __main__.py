@@ -1,7 +1,7 @@
 import asyncio
 import logging
 try:
-    import systemd
+    import systemd  # type: ignore
 except ImportError:
     import src.non_systemd as systemd
 

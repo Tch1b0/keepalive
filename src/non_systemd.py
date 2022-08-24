@@ -1,5 +1,5 @@
 """
-this file will be loaded if the systemd module is not installed.
+this module will be loaded if the systemd module is not installed.
 
 the code in here just works as a placeholder, 
 so that nothing breaks when running on a non-linux or non-systemd device.
@@ -16,5 +16,6 @@ class Daemon:
         READY = auto()
         STATUS = auto()
         STOPPING = auto()
+
 
 daemon = Daemon()

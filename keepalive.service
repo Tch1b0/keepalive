@@ -1,16 +1,12 @@
-# systemd unit file for the Python Demo Service
-
-
 [Unit]
 
-# Human readable name of the unit
-Description=Python Demo Service
+Description=keepalive keeping the server alive
 
 
 [Service]
 
 # Command to execute when the service is started
-ExecStart=/usr/bin/python /usr/local/lib/keepalive.py
+ExecStart=/usr/bin/python3.10 /usr/local/lib/keepalive
 
 # Disable Python's buffering of STDOUT and STDERR, so that output from the
 # service shows up immediately in systemd's logs
@@ -22,7 +18,6 @@ Restart=on-failure
 # Our service will notify systemd once it is up and running
 Type=notify
 
-# Use a dedicated user to run our service
 User=root
 
 
