@@ -15,11 +15,11 @@ async def main():
     asyncio.create_task(bot.update_base_message_loop())
     await bot.start()
     await jobs.start()
-    systemd.daemon.notify(systemd.daemon.Notification.READY)
+    # systemd.daemon.notify(systemd.daemon.Notification.READY)
     try:
         await asyncio.Future()
     except:
         await bot.stop()
 
 asyncio.run(main())
-systemd.daemon.notify(systemd.daemon.Notification.STOPPING)
+# systemd.daemon.notify(systemd.daemon.Notification.STOPPING)
