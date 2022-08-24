@@ -3,7 +3,7 @@
     <h1 style="underline">keepalive</h1>
     <h3>helping to keep my server alive</h3>
     <img src="https://img.shields.io/github/license/Tch1b0/keepalive" />
-    <img src="https://img.shields.io/github/workflow/status/Tch1b0/keepalive/ci" />
+    <img src="https://img.shields.io/github/workflow/status/Tch1b0/keepalive/ci?label=ci" />
     <img src="https://img.shields.io/github/issues/Tch1b0/keepalive" />
 </div>
 

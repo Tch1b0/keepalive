@@ -1,4 +1,4 @@
-name: Unit test
+name: ci
 
 on: [push]
 
