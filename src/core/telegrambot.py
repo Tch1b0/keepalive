@@ -47,7 +47,7 @@ class TelegramBot(Bot):
 
     async def update_base_message_loop(self):
         while True:
-            await asyncio.sleep(30)
+            await asyncio.sleep(60)
             await self.update_base_message()
 
     def get_info_board(self) -> str:

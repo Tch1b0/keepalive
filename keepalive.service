@@ -1,6 +1,6 @@
 [Unit]
 
-Description=keepalive keeping the server alive
+Description=keepalive
 
 
 [Service]
