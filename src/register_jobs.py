@@ -26,7 +26,7 @@ bot.informants.append(
     lambda: f"Running Containers: {metrics.running_container_count}"
 )
 
-
+# JOB: storage checker
 @jobs.register(time_in_seconds(hours=1))
 async def check_storage():
     if metrics.storage_left/metrics.storage_total < .1 or metrics.storage_left < 2:
@@ -35,7 +35,7 @@ async def check_storage():
             log.info(f"Pruned: {docker_client.images.prune()}")
             log.info(f"Pruned: {docker_client.containers.prune()}")
 
-
+# JOB: cloud verifier
 @jobs.register(time_in_seconds(minutes=1))
 async def verify_cloud():
     nx_containers = []
@@ -49,11 +49,11 @@ async def verify_cloud():
             for container in nx_containers:
                 container.restart()
 
-
+# JOB: apdater
 @jobs.register(time_in_seconds(days=3), False)
 async def update_packages():
     # TODO: process return code
     code = exec_sh("apt-get update")
     if await bot.decide(f"`apt-get update` returned status code {code}. Run `apt-get upgrade`?", ["yes", "no"]) == 0:
         # TODO: process return code
-        code = exec_sh("apt-get upgrade")
+        code = exec_sh("apt-get upgrade -y")
