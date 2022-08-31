@@ -17,6 +17,9 @@ Restart=on-failure
 
 Type=simple
 
+# Run service as root: this requires an extra portion of caution for executing tasks
+# TODO: create a new user for keepalive so the permissions are cut to the needs
+User=root
 
 [Install]
 
