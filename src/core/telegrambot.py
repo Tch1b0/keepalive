@@ -15,16 +15,15 @@ class TelegramBot(Bot):
     admin_id: str
     update_queue: asyncio.Queue
     updater: Updater
-    base_message: Message = None
-
-    currently_interacting: bool = False
-    informants: list[Callable[[], str]] = []
-    decision_stack: list[UUID] = []
 
     def __init__(self, token: str, admin_id: str, base_url: str = "https://api.telegram.org/bot", base_file_url: str = "https://api.telegram.org/file/bot", request: BaseRequest = None, get_updates_request: BaseRequest = None, private_key: bytes = None, private_key_password: bytes = None):
         super().__init__(token, base_url, base_file_url, request,
                          get_updates_request, private_key, private_key_password)
 
+        self.currently_interacting: bool = False
+        self.informants: list[Callable[[], str]] = []
+        self.decision_stack: list[UUID] = []
+        self.base_message: Message = None
         self.admin_id = admin_id
         self.update_queue = asyncio.Queue()
         self.updater = Updater(self, self.update_queue)
@@ -51,7 +50,7 @@ class TelegramBot(Bot):
             await self.update_base_message()
 
     def get_info_board(self) -> str:
-        msg = f"{Emoji.ROCKET.value} keepalive is currently keeping alive\n" + \
+        msg = f"{Emoji.ROCKET} keepalive is currently keeping alive\n" + \
             f"Last ping: {datetime.now().strftime('%d.%m.%Y %H:%M')}\n"
         msg += "\n".join(f() for f in self.informants)
         return msg

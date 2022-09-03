@@ -6,15 +6,13 @@ import shutil
 log = logging.getLogger()
 
 class Metrics:
-    docker_client: DockerClient
-    update_loop_active: bool = False
-
     storage_total: int
     storage_left: int
     storage_used: int
     running_container_count: int
 
     def __init__(self, docker_client: DockerClient):
+        self.update_loop_active = False
         self.docker_client = docker_client
         self.collect_metrics()
 

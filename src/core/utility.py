@@ -1,11 +1,10 @@
 import logging
-from enum import Enum
 from subprocess import call
 
 log = logging.getLogger()
 
 
-class Emoji(Enum):
+class Emoji:
     ROCKET = "\U0001F680"
     CHECK_MARK = "\U00002705"
     CROSS_MARK = "\U0000274C"
