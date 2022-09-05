@@ -14,7 +14,6 @@ BOT_TOKEN = os.getenv("BOT_TOKEN")
 ADMIN_ID = os.getenv("ADMIN_ID")
 
 log = logging.getLogger()
-
 docker_client = docker.from_env()
 jobs = Jobs()
 metrics = Metrics(docker_client)
@@ -26,17 +25,21 @@ bot.informants.append(
     lambda: f"Running Containers: {metrics.running_container_count}"
 )
 
-# JOB: storage checker
+
 @jobs.register(time_in_seconds(hours=1))
+# JOB: storage checker
 async def check_storage():
     if metrics.storage_left/metrics.storage_total < .1 or metrics.storage_left < 2:
         question = f"Storage is low: only {metrics.storage_left} GB left. Clear dangling docker images/containers?"
         if await bot.decide(question, ["yes", "no"]) == 0:
-            log.info(f"Pruned: {docker_client.images.prune()}")
-            log.info(f"Pruned: {docker_client.containers.prune()}")
+            image_prune_result = docker_client.images.prune()
+            container_prune_result = docker_client.containers.prune()
+            log.info(f"Pruned: {image_prune_result}")
+            log.info(f"Pruned: {container_prune_result}")
 
-# JOB: cloud verifier
+
 @jobs.register(time_in_seconds(minutes=1))
+# JOB: cloud verifier
 async def verify_cloud():
     nx_containers = []
     for container in docker_client.containers.list(True):
@@ -49,8 +52,9 @@ async def verify_cloud():
             for container in nx_containers:
                 container.restart()
 
+
+@jobs.register(time_in_seconds(days=3), run_initially=False)
 # JOB: apdater
-@jobs.register(time_in_seconds(days=3), False)
 async def update_packages():
     # TODO: process return code
     code = exec_sh("apt-get update")
