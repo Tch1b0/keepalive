@@ -63,3 +63,11 @@ class Jobs:
         for job in self.jobs:
             if not job.active:
                 await job.start()
+
+    def stop(self):
+        """
+        stop all jobs
+        """
+        for job in self.jobs:
+            if job.active:
+                job.stop()
