@@ -71,7 +71,7 @@ class TelegramBot(Bot):
         msg = await self.chat.send_poll(question, answers)
         # wait until the given update is received
         while not hasattr(await self.update_queue.get(), "poll"):
-            asyncio.sleep(1)
+            await asyncio.sleep(1)
 
         poll = await msg.stop_poll()
         for i, answer in enumerate(poll.options):
