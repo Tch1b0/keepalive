@@ -1,7 +1,7 @@
 import asyncio
 import logging
-from process import Process
 
+from src.process import Process
 from src.register_jobs import jobs, bot, metrics
 
 logging.basicConfig(level=logging.INFO)
