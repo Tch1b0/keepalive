@@ -3,10 +3,18 @@
 EXPECTED_PROJECT_ROOT=/usr/lib/keepalive
 EXPECTED_SERVICE_FILE="$EXPECTED_PROJECT_ROOT"/keepalive.service
 
+# installed: boolean
+installed=0
+
 install () {
+    # return if already installed
+    if [ $installed -eq 1 ]; then
+        return
+    fi
     # copy the keepalive.service file in a directory systemd scans
     cp "$EXPECTED_SERVICE_FILE" /etc/systemd/system/keepalive.service
     systemctl daemon-reload
+    installed=1
 }
 
 start () {
@@ -19,6 +27,12 @@ enable () {
     systemctl enable keepalive
 }
 
+deploy () {
+    install
+    start
+    enable
+}
+
 # remove systemd references to keepalive
 uninstall () {
     systemctl disable keepalive
@@ -29,6 +43,8 @@ uninstall () {
 
 upgrade () {
     git -C "$EXPECTED_PROJECT_ROOT" pull
+    # set installed to 0(=false) as the updated version was not installed yet
+    installed=0
     install
 }
 
@@ -42,6 +58,7 @@ commands:
     install   - install keepalive as a unit for systemd
     start     - start the keepalive unit in systemd
     enable    - enable the keepalive unit in systemd for autostart
+    deploy    - install, start and enable keepalive
     uninstall - uninstall the keepalive unit from systemd
     upgrade   - pull and install the newest keepalive version
     help      - display this help
