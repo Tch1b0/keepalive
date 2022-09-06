@@ -1,5 +1,7 @@
 import logging
+from signal import signal
 from subprocess import call
+from typing import Callable, Iterable
 
 log = logging.getLogger()
 
