@@ -23,9 +23,17 @@ start () {
     systemctl start keepalive
 }
 
+stop () {
+    systemctl stop keepalive
+}
+
 enable () {
     install
     systemctl enable keepalive
+}
+
+disable () {
+    systemctl disable keepalive
 }
 
 deploy () {
@@ -57,10 +65,12 @@ keepalive helper cli
 
 commands:
     install   - install keepalive as a unit for systemd
-    start     - start the keepalive unit in systemd
-    enable    - enable the keepalive unit in systemd for autostart
+    start     - start the keepalive systemd unit
+    stop      - stop the keepalive systemd unit
+    enable    - enable the keepalive systemd unit for autostart
+    disable   - disable the keepalive systemd unit for autostart
     deploy    - install, start and enable keepalive
-    uninstall - uninstall the keepalive unit from systemd
+    uninstall - uninstall the keepalive systemd unit
     upgrade   - pull and install the newest keepalive version
     help      - display this help
 EOF
