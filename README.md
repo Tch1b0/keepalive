@@ -45,7 +45,6 @@ In the file, you need to set the variables `ADMIN_ID` and `BOT_TOKEN`.
 The `BOT_TOKEN` needs to be the token of your telegram bot and the `ADMIN_ID` needs to be your telegram id. To get your telegram id you can use a bot like [@userinfobot](https://t.me/userinfobot).
 
 ```sh
-$ chmod +x ./cli.sh
 $ ./cli.sh deploy
 ```
 
