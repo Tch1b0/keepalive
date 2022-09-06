@@ -60,7 +60,7 @@ upgrade () {
 help () {
     cat <<EOF
 usage: ./cli.sh [COMMAND]
-    
+
 keepalive helper cli
 
 commands:
