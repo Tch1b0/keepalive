@@ -11,6 +11,7 @@ install () {
     if [ $installed -eq 1 ]; then
         return
     fi
+    pip install -r "$EXPECTED_PROJECT_ROOT"/requirements.txt
     # copy the keepalive.service file in a directory systemd scans
     cp "$EXPECTED_SERVICE_FILE" /etc/systemd/system/keepalive.service
     systemctl daemon-reload
