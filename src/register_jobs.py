@@ -20,16 +20,15 @@ metrics = Metrics(docker_client)
 bot = TelegramBot(BOT_TOKEN, ADMIN_ID)
 
 bot.informants.append(
-    lambda: f"Storage: {metrics.storage_left} GB of {metrics.storage_total} GB left")
-bot.informants.append(
-    lambda: f"Running Containers: {metrics.running_container_count}"
+    lambda: f"Storage: {metrics.storage_left} GB of {metrics.storage_total} GB left"
 )
+bot.informants.append(lambda: f"Running Containers: {metrics.running_container_count}")
 
 
 @jobs.register(time_in_seconds(hours=1))
 # JOB: storage checker
 async def check_storage():
-    if metrics.storage_left/metrics.storage_total < .1 or metrics.storage_left < 2:
+    if metrics.storage_left / metrics.storage_total < 0.1 or metrics.storage_left < 2:
         question = f"Storage is low: only {metrics.storage_left} GB left. Clear dangling docker images/containers?"
         if await bot.decide(question, ["yes", "no"]) == 0:
             image_prune_result = docker_client.images.prune()
@@ -58,6 +57,12 @@ async def verify_cloud():
 async def update_packages():
     # TODO: process return code
     code = exec_sh("apt-get update")
-    if await bot.decide(f"`apt-get update` returned status code {code}. Run `apt-get upgrade`?", ["yes", "no"]) == 0:
+    if (
+        await bot.decide(
+            f"`apt-get update` returned status code {code}. Run `apt-get upgrade`?",
+            ["yes", "no"],
+        )
+        == 0
+    ):
         # TODO: process return code
         code = exec_sh("apt-get upgrade -y")

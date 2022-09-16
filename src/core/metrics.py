@@ -5,6 +5,7 @@ import shutil
 
 log = logging.getLogger()
 
+
 class Metrics:
     storage_total: int
     storage_left: int
@@ -20,9 +21,9 @@ class Metrics:
         log.info("Collecting metrics")
         disk_usage = shutil.disk_usage("/")
         self.storage_total, self.storage_used, self.storage_left = [
-            x // (2**30) for x in disk_usage]
-        self.running_container_count = len(
-            self.docker_client.containers.list())
+            x // (2**30) for x in disk_usage
+        ]
+        self.running_container_count = len(self.docker_client.containers.list())
 
     async def update_loop(self):
         if self.update_loop_active:

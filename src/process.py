@@ -15,8 +15,8 @@ class Process:
         """
         sleep until the process is being terminated.
 
-        Method does NOT terminate the process like the name might suggest. 
+        Method does NOT terminate the process like the name might suggest.
         The name was chosen because of the syntactic sugar `await process.termination()`
         """
         while not self.is_terminating:
-            await asyncio.sleep(.1)
+            await asyncio.sleep(0.1)
