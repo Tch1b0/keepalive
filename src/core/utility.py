@@ -1,3 +1,4 @@
+import asyncio
 import logging
 from subprocess import call
 
@@ -33,3 +34,7 @@ def exec_sh(command: str) -> tuple[int, str]:
     log.info(f'Executing shell command "{command}"')
     code = call(command, shell=True)
     return code
+
+
+async def idle(time=1) -> None:
+    await asyncio.sleep(time)

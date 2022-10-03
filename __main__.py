@@ -21,6 +21,7 @@ async def main():
     await jobs.start()
 
     await process.termination()
+    log.log("terminating process")
     await bot.stop()
 
 

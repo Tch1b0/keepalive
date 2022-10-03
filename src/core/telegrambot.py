@@ -6,7 +6,7 @@ from telegram import Bot, User, Message, Chat
 from telegram.ext import Updater
 from telegram.request import BaseRequest
 
-from src.core.utility import Emoji
+from src.core.utility import Emoji, idle
 
 
 class TelegramBot(Bot):
@@ -63,7 +63,7 @@ class TelegramBot(Bot):
 
     async def update_base_message_loop(self):
         while True:
-            await asyncio.sleep(60)
+            await idle(60)
             await self.update_base_message()
 
     def get_info_board(self) -> str:
@@ -81,9 +81,10 @@ class TelegramBot(Bot):
 
         # wait until no interaction is done
         while self.currently_interacting and (
-            len(self.decision_stack) != 0 and self.decision_stack[0] != decision_id
+            len(
+                self.decision_stack) != 0 and self.decision_stack[0] != decision_id
         ):
-            await asyncio.sleep(1)
+            await idle()
 
         if len(self.decision_stack) != 0:
             self.decision_stack.pop()
@@ -92,7 +93,7 @@ class TelegramBot(Bot):
         msg = await self.chat.send_poll(question, answers)
         # wait until the given update is received
         while not hasattr(await self.update_queue.get(), "poll"):
-            await asyncio.sleep(1)
+            await idle()
 
         poll = await msg.stop_poll()
         for i, answer in enumerate(poll.options):

@@ -1,6 +1,8 @@
 import asyncio
 import signal
 
+from core.utility import idle
+
 
 class Process:
     def __init__(self) -> None:
@@ -19,4 +21,4 @@ class Process:
         The name was chosen because of the syntactic sugar `await process.termination()`
         """
         while not self.is_terminating:
-            await asyncio.sleep(0.1)
+            await idle(0.1)

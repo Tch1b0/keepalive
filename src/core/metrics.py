@@ -1,7 +1,8 @@
 import logging
 from docker import DockerClient
-import asyncio
 import shutil
+
+from core.utility import idle
 
 log = logging.getLogger()
 
@@ -23,7 +24,8 @@ class Metrics:
         self.storage_total, self.storage_used, self.storage_left = [
             x // (2**30) for x in disk_usage
         ]
-        self.running_container_count = len(self.docker_client.containers.list())
+        self.running_container_count = len(
+            self.docker_client.containers.list())
 
     async def update_loop(self):
         if self.update_loop_active:
@@ -32,4 +34,4 @@ class Metrics:
         self.update_loop_active = True
         while self.update_loop_active:
             self.collect_metrics()
-            await asyncio.sleep(60)
+            await idle(60)
