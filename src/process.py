@@ -1,7 +1,6 @@
-import asyncio
 import signal
 
-from core.utility import idle
+from src.core.utility import idle
 
 
 class Process:

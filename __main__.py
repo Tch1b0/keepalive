@@ -10,18 +10,18 @@ process = Process()
 
 
 async def main():
-    log.log("starting loops update loops")
+    log.info("starting loops update loops")
     asyncio.create_task(metrics.update_loop())
     asyncio.create_task(bot.update_base_message_loop())
 
-    log.log("starting bot")
+    log.info("starting bot")
     await bot.start()
 
-    log.log("starting jobs")
+    log.info("starting jobs")
     await jobs.start()
 
     await process.termination()
-    log.log("terminating process")
+    log.info("terminating process")
     await bot.stop()
 
 

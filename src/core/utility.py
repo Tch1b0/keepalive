@@ -27,7 +27,7 @@ def time_in_seconds(
     return seconds + minutes * 60 + hours * 60 * 60 + days * 60 * 60 * 24
 
 
-def exec_sh(command: str) -> tuple[int, str]:
+def exec_sh(command: str) -> int:
     """
     execute shell command
     """
@@ -36,5 +36,5 @@ def exec_sh(command: str) -> tuple[int, str]:
     return code
 
 
-async def idle(time=1) -> None:
+async def idle(time: float = 1) -> None:
     await asyncio.sleep(time)

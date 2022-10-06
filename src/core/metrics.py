@@ -2,7 +2,7 @@ import logging
 from docker import DockerClient
 import shutil
 
-from core.utility import idle
+from src.core.utility import idle
 
 log = logging.getLogger()
 
