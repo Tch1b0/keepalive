@@ -13,6 +13,10 @@ load_dotenv()
 BOT_TOKEN = os.getenv("BOT_TOKEN")
 ADMIN_ID = os.getenv("ADMIN_ID")
 
+if BOT_TOKEN is None or ADMIN_ID is None:
+    print("BOT_TOKEN or ADMIN_ID not defined")
+    exit()
+
 log = logging.getLogger()
 docker_client = docker.from_env()
 jobs = Jobs()
