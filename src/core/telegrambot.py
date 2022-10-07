@@ -97,3 +97,6 @@ class TelegramBot(Bot):
         await msg.delete()
         raise Exception("Poll was not answered")
 
+    async def yesno(self, question: str) -> bool:
+        return (await self.decide(question, ["yes", "no"])) == 0
+

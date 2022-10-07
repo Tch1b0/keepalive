@@ -34,7 +34,7 @@ bot.informants.append(lambda: f"Running Containers: {metrics.running_container_c
 async def check_storage():
     if metrics.storage_left / metrics.storage_total < 0.1 or metrics.storage_left < 2:
         question = f"Storage is low: only {metrics.storage_left} GB left. Clear dangling docker images/containers?"
-        if await bot.decide(question, ["yes", "no"]) == 0:
+        if await bot.yesno(question):
             image_prune_result = docker_client.images.prune()
             container_prune_result = docker_client.containers.prune()
             log.info(f"Pruned: {image_prune_result}")
@@ -51,7 +51,7 @@ async def verify_cloud():
 
     if any(c.status != "running" for c in nx_containers):
         question = f"Nexcloud containers are not running. Restart the nextcloud and the database container?"
-        if await bot.decide(question, ["yes", "no"]) == 0:
+        if await bot.yesno(question): 
             for container in nx_containers:
                 container.restart()
 
@@ -61,12 +61,7 @@ async def verify_cloud():
 async def update_packages():
     # TODO: process return code
     code = exec_sh("apt-get update")
-    if (
-        await bot.decide(
-            f"`apt-get update` returned status code {code}. Run `apt-get upgrade`?",
-            ["yes", "no"],
-        )
-        == 0
-    ):
+    question = f"`apt-get update` returned status code {code}. Run `apt-get upgrade`?"
+    if await bot.yesno(question):
         # TODO: process return code
         code = exec_sh("apt-get upgrade -y")
