@@ -65,3 +65,4 @@ async def update_packages():
     if await bot.yesno(question):
         # TODO: process return code
         code = exec_sh("apt-get upgrade -y")
+
