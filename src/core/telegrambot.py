@@ -2,16 +2,15 @@ import asyncio
 from uuid import UUID, uuid4
 from datetime import datetime
 from typing import Callable
-from telegram import Bot, User, Message, Chat
+from telegram import Bot, ChatMember, Message, Chat
 from telegram.ext import Updater
-from telegram.request import BaseRequest
 
 from src.core.utility import Emoji, idle
 
 
 class TelegramBot(Bot):
     chat: Chat
-    admin: User
+    admin: ChatMember
     admin_id: str
     update_queue: asyncio.Queue
     updater: Updater
@@ -22,25 +21,17 @@ class TelegramBot(Bot):
         admin_id: str,
         base_url: str = "https://api.telegram.org/bot",
         base_file_url: str = "https://api.telegram.org/file/bot",
-        request: BaseRequest = None,
-        get_updates_request: BaseRequest = None,
-        private_key: bytes = None,
-        private_key_password: bytes = None,
     ):
         super().__init__(
             token,
             base_url,
             base_file_url,
-            request,
-            get_updates_request,
-            private_key,
-            private_key_password,
         )
 
         self.currently_interacting: bool = False
         self.informants: list[Callable[[], str]] = []
         self.decision_stack: list[UUID] = []
-        self.base_message: Message = None
+        self.base_message: Message 
         self.admin_id = admin_id
         self.update_queue = asyncio.Queue()
         self.updater = Updater(self, self.update_queue)
@@ -105,3 +96,7 @@ class TelegramBot(Bot):
         self.update_queue.task_done()
         await msg.delete()
         raise Exception("Poll was not answered")
+
+    async def yesno(self, question: str) -> bool:
+        return (await self.decide(question, ["yes", "no"])) == 0
+

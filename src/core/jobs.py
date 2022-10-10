@@ -1,8 +1,8 @@
 import asyncio
 import logging
-from typing import Callable, Coroutine
+from typing import Callable
 
-JobCallable = Coroutine
+JobCallable = Callable 
 
 log = logging.getLogger()
 
