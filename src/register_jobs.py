@@ -26,7 +26,8 @@ bot = TelegramBot(BOT_TOKEN, ADMIN_ID)
 bot.informants.append(
     lambda: f"Storage: {metrics.storage_left} GB of {metrics.storage_total} GB left"
 )
-bot.informants.append(lambda: f"Running Containers: {metrics.running_container_count}")
+bot.informants.append(
+    lambda: f"Running Containers: {metrics.running_container_count}")
 
 
 @jobs.register(time_in_seconds(hours=1))
@@ -50,8 +51,8 @@ async def verify_cloud():
             nx_containers.append(container)
 
     if any(c.status != "running" for c in nx_containers):
-        question = f"Nexcloud containers are not running. Restart the nextcloud and the database container?"
-        if await bot.yesno(question): 
+        question = f"Nextcloud containers are not running. Restart the nextcloud and the database container?"
+        if await bot.yesno(question):
             for container in nx_containers:
                 container.restart()
 
@@ -65,4 +66,3 @@ async def update_packages():
     if await bot.yesno(question):
         # TODO: process return code
         code = exec_sh("apt-get upgrade -y")
-
