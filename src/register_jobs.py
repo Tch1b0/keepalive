@@ -57,7 +57,7 @@ async def verify_cloud():
                 container.restart()
 
 
-@jobs.register(time_in_seconds(days=3), run_initially=False)
+# TODO: fix update_packages job and insert line "@jobs.register(time_in_seconds(days=3), run_initially=False)" here
 # JOB: apdater
 async def update_packages():
     # TODO: process return code
