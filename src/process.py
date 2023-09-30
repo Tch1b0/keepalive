@@ -9,7 +9,7 @@ class Process:
         for sig in [signal.SIGTERM, signal.SIGINT]:
             signal.signal(sig, self.exit_gracefully)
 
-    def exit_gracefully(self, *args):
+    def exit_gracefully(self, *_):
         self.is_terminating = True
 
     async def termination(self):
