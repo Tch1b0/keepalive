@@ -13,7 +13,7 @@ load_dotenv()
 BOT_TOKEN = os.getenv("BOT_TOKEN")
 ADMIN_ID = os.getenv("ADMIN_ID")
 
-if BOT_TOKEN is None or ADMIN_ID is None:
+if None in [BOT_TOKEN, ADMIN_ID]:
     print("BOT_TOKEN or ADMIN_ID not defined")
     exit()
 
@@ -57,12 +57,10 @@ async def verify_cloud():
                 container.restart()
 
 
-# TODO: fix update_packages job and insert line "@jobs.register(time_in_seconds(days=3), run_initially=False)" here
+@jobs.register(time_in_seconds(days=3), run_initially=False)
 # JOB: apdater
 async def update_packages():
-    # TODO: process return code
-    code = exec_sh("apt-get update")
-    question = f"`apt-get update` returned status code {code}. Run `apt-get upgrade`?"
+    update_result = exec_sh("apt-get update")
+    question = f"`apt-get update` returned status code {update_result.returncode}. Run `apt-get upgrade`?"
     if await bot.yesno(question):
-        # TODO: process return code
-        code = exec_sh("apt-get upgrade -y")
+        exec_sh("apt-get upgrade -y")

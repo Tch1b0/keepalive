@@ -1,6 +1,6 @@
 import asyncio
 import logging
-from subprocess import call
+import subprocess
 
 log = logging.getLogger()
 
@@ -27,13 +27,13 @@ def time_in_seconds(
     return seconds + minutes * 60 + hours * 60 * 60 + days * 60 * 60 * 24
 
 
-def exec_sh(command: str) -> int:
+def exec_sh(command: str) -> subprocess.CompletedProcess[bytes]:
     """
     execute shell command
     """
     log.info(f'Executing shell command "{command}"')
-    code = call(command, shell=True)
-    return code
+    result = subprocess.run(command)
+    return result
 
 
 async def idle(time: float = 1) -> None:

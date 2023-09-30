@@ -19,19 +19,13 @@ class TelegramBot(Bot):
         self,
         token: str,
         admin_id: str,
-        base_url: str = "https://api.telegram.org/bot",
-        base_file_url: str = "https://api.telegram.org/file/bot",
     ):
-        super().__init__(
-            token,
-            base_url,
-            base_file_url,
-        )
+        super().__init__(token)
 
         self.currently_interacting: bool = False
         self.informants: list[Callable[[], str]] = []
         self.decision_stack: list[UUID] = []
-        self.base_message: Message 
+        self.base_message: Message
         self.admin_id = admin_id
         self.update_queue = asyncio.Queue()
         self.updater = Updater(self, self.update_queue)
@@ -99,4 +93,3 @@ class TelegramBot(Bot):
 
     async def yesno(self, question: str) -> bool:
         return (await self.decide(question, ["yes", "no"])) == 0
-
