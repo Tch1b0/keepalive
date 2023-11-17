@@ -44,10 +44,7 @@ class TelegramBot(Bot):
     async def update_base_message(self):
         content = self.get_info_board()
         if content != self.base_message.text:
-            failed = await self.base_message.edit_text(content)
-            if failed is True:
-                self.stop()
-                self.start()
+            await self.base_message.edit_text(content)
 
     async def update_base_message_loop(self):
         while True:

@@ -21,7 +21,7 @@ log = logging.getLogger()
 docker_client = docker.from_env()
 jobs = Jobs()
 metrics = Metrics(docker_client)
-bot = TelegramBot(BOT_TOKEN, ADMIN_ID)
+bot: TelegramBot = TelegramBot(BOT_TOKEN, ADMIN_ID)
 
 bot.informants.append(
     lambda: f"Storage: {metrics.storage_left} GB of {metrics.storage_total} GB left"
@@ -64,3 +64,9 @@ async def update_packages():
     question = f"`apt-get update` returned status code {update_result.returncode}. Run `apt-get upgrade`?"
     if await bot.yesno(question):
         exec_sh("apt-get upgrade -y")
+
+@jobs.register(time_in_seconds(days=15), run_initially=False)
+# JOB: resend message
+async def resend_status_message():
+    await bot.stop()
+    await bot.start()
