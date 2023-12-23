@@ -65,7 +65,7 @@ async def update_packages():
     if await bot.yesno(question):
         exec_sh("apt-get upgrade -y")
 
-@jobs.register(time_in_seconds(days=15), run_initially=False)
+@jobs.register(time_in_seconds(days=5), run_initially=False)
 # JOB: resend message
 async def resend_status_message():
     await bot.stop()
