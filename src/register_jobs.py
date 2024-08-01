@@ -1,9 +1,10 @@
 import logging
 import os
+import psutil
 import docker
 from dotenv import load_dotenv
-from src.core.utility import exec_sh, time_in_seconds
 
+from src.core.utility import exec_sh, time_in_seconds
 from src.core.jobs import Jobs
 from src.core.metrics import Metrics
 from src.core.telegrambot import TelegramBot
@@ -28,6 +29,9 @@ bot.informants.append(
 )
 bot.informants.append(
     lambda: f"Running Containers: {metrics.running_container_count}")
+bot.informants.append(
+    lambda: f"Current CPU usage: {psutil.cpu_percent() * 100:.2f}%"
+)
 
 
 @jobs.register(time_in_seconds(hours=1))
@@ -70,3 +74,18 @@ async def update_packages():
 async def resend_status_message():
     await bot.stop()
     await bot.start()
+
+@jobs.register(time_in_seconds(seconds=30), run_initially=True)
+# JOB: check CPU usage
+async def check_cpu_usage(cpu_high=[False]):
+    cpu_usage = psutil.cpu_percent()
+    if cpu_usage > 0.8:
+        if not cpu_high[0]:
+            cpu_high[0] = True
+            return
+        decision = bot.decide("CPU has been over 80%% for at least 1 minute", ["ignore", "reboot", "shutdown"])
+        match decision:
+            case 2:
+                os.system("shutdown now -h")
+            case 3:
+                os.system("reboot")
