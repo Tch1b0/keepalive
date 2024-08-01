@@ -85,7 +85,9 @@ async def check_cpu_usage(cpu_high=[False]):
             return
         decision = bot.decide("CPU has been over 80%% for at least 1 minute", ["ignore", "reboot", "shutdown"])
         match decision:
+            case 1:
+                os.system("reboot")
             case 2:
                 os.system("shutdown now -h")
-            case 3:
-                os.system("reboot")
+    else:
+        cpu_high[0] = False
