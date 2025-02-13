@@ -13,7 +13,9 @@ ExecStart=/usr/bin/python3.10 /usr/lib/keepalive
 Environment=PYTHONUNBUFFERED=1
 
 # Automatically restart the service if it crashes
-Restart=on-failure
+Restart=always
+# Restart the service either way every 7 days
+RuntimeMaxSec=7d
 
 Type=simple
 
